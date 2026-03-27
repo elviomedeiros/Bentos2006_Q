@@ -1,0 +1,17 @@
+{
+  "hash": "f18484d99f8311aa0f10d961bac1e41d",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Script do MS\"\neditor_options: \n  chunk_output_type: console\neditor: source\n---\n\n## Script limpo {.unnumbered}\n\nAqui apresento o scrip na íntegra sem os textos ou outros comentários. Você pode copiar e colar no R para executá-lo. Lembre-se de remover os `#` ou `##` caso necessite executar essas linhas.\n\n\n::: {.cell}\n\n:::\n\n\n\n::: {.cell}\n\n:::\n\n",
+    "supporting": [
+      "script_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,135 @@
+---
+title: "Script do MS"
+editor_options: 
+  chunk_output_type: console
+editor: source
+---
+
+## Script limpo {.unnumbered}
+
+Aqui apresento o scrip na íntegra sem os textos ou outros comentários. Você pode copiar e colar no R para executá-lo. Lembre-se de remover os `#` ou `##` caso necessite executar essas linhas.
+
+```{r}
+#| eval: false
+#| echo: false
+#| purl: false
+knitr::purl(input = "index.qmd", output = "script.txt", documentation = 0)
+Script <- readLines("script.txt")
+Script <- Script[Script != ""]
+writeLines(Script, "script.txt")
+cat(Script, sep = "\n")
+```
+
+```{r}
+#| eval: false
+#| purl: false
+#| code-line-numbers: true
+
+## rm(list=ls(all=TRUE)) #limpa a memória
+## install.packages("openxlsx") #importa arquivos do excel
+## install.packages("moments") #calcula assimetria e curtose dos dados
+## install.packages("vegan") #estatisticas para ecologia de comunidades
+library(openxlsx)
+## getwd()
+## setwd("C:/Seu/Diretório/De/Trabalho")
+library(openxlsx)
+ppbio <- read.xlsx("D:/Elvio/OneDrive/Disciplinas/_EcoNumerica/5.Matrizes/ppbio06.xlsx",
+                   rowNames = T,
+                   colNames = T,
+                   sheet = "Sheet1")
+str(ppbio)
+ppbio_ma <- as.matrix(ppbio) #lê ppbio como uma matriz
+str(ppbio_ma)
+#ppbio
+#ppbio_ma
+#View(ppbio)
+print(ppbio)
+head(ppbio)
+str(ppbio)
+mode(ppbio)
+class(ppbio)
+range(ppbio) #menor e maior valores
+length(ppbio) #no. de colunas
+ncol(ppbio) #no. de N colunas
+nrow(ppbio) #no. de M linhas
+sum(lengths(ppbio)) #soma os nos. de colunas
+length(as.matrix(ppbio)) #tamanho da matriz m x n
+sum(ppbio == 0) # número de observações igual a zero
+sum(ppbio > 0) # número de observações maiores que zero
+zeros <- (sum(ppbio == 0)/length(as.matrix(ppbio)))*100 # proporção de zeros na matriz
+zeros
+tamanho <- data.frame(
+  Função = c("range", "lenght", "m cols", "n linhas", "Tamanho", "Tamanho",
+             "Zeros", "Nao zeros", "% Zeros"),
+  Resultado = c(paste(range(ppbio), collapse = " - "), length(ppbio), ncol(ppbio),
+                nrow(ppbio), sum(lengths(ppbio)), length(as.matrix(ppbio)), sum(ppbio == 0),
+                sum(ppbio > 0), round(zeros, 1))
+)
+tamanho
+knitr::kable(tamanho, format = "markdown")
+#ppbio <- (ppbio)   # <1>
+ppbiodist <- dist(ppbio, method = "euclidian", diag = TRUE, upper = FALSE)
+ppbiodist
+str(ppbiodist)
+mode(ppbiodist)
+class(ppbiodist)
+length(ppbiodist)
+dist <- (as.matrix(ppbiodist))
+#View(dist)
+str(dist)
+mode(dist)
+class(dist)
+#head(dist)
+dist[1:5, 1:5] #mostra as 5 primeiras linhas e colunas da matriz
+range(dist) # intervalo dos valores da matriz
+mean(dist) # média dos valores da matriz
+sd(dist) # desvio padrão dos valores da matriz
+library(moments)
+sk <- (as.matrix(skewness(dist))) # calcula a assimetria da matriz
+ku <- (as.matrix(kurtosis(dist))) # calcula a curtose da matriz
+sku <- cbind(sk,ku) # junta os dois valores em um vetor
+colnames(sku) <- c("assimetria", "curtose") # nomeia as colunas do vetor
+sku[1:10, ] # mostra as primeiras 10 linhas desse vetor
+summary(sku) # mostra um resumo estatístico do vetor
+range(dist)
+par(mfrow=c(2,1)) # esse comando faz os gráficos aparecerem um acima do outro
+hist(dist,
+     breaks = 20, # determina o número de colunas do histograma
+     xlim = range(0,871), # limites dos eixos
+     xlab = "Distr. de Frequências",
+     freq = FALSE, # mostra as frequências relativas em vez das absolutas
+     main = "Histograma e boxplot da matriz de distâncias")
+curve(dnorm(x, mean=mean(dist), sd=sd(dist)), add=TRUE) # sobrepõe a curva de normalidade
+boxplot.default(dist, horizontal = TRUE, frame = FALSE,
+                xlab="Distr. de Frequências",
+                ylim=c(0,871)) # limites dos eixos
+## dev.off() #apaga os gráficos
+library(vegan)
+ppbiorelcol <- decostand(ppbio,
+                         method="total",
+                         MARGIN = 2)
+#View(ppbiorelcol)
+ppbiorelcol
+## ppbiolg10 <- log10(ppbio)
+## View(ppbiolg10)
+## ppbiolg10 <- replace(ppbiolg10, is.infinite(ppbiolg10), 0)
+## head(ppbiolg10)
+## ppbiolgx1 <- log(ppbio+1)
+## View(ppbiolgx1)
+## ppbioP1 <- ppbio^1 #p=1
+## View(ppbioP1)
+## ppbioP05 <- ppbio^0.5 #p=0,5
+## View(ppbioP05)
+## ppbioP01 <- ppbio^0.1 #p=0,1
+## View(ppbioP01)
+## ppbiopa <- (ppbio>0)*1L
+## View(ppbiopa)
+## ppbiorq <- sqrt(ppbio)
+## View(ppbiorq)
+## ppbioasrq <- asin(sqrt(ppbiorelcol))
+## View(ppbioasrq)
+## # OU
+## ppbioasrqpi <- 2/pi*(asin(sqrt(ppbiorelcol)))
+## View(ppbioasrqpi)
+
+```

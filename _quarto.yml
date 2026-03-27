@@ -1,0 +1,45 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Bentos 2006"
+  navbar:
+    left:
+    - href: index.qmd
+      text: Manuscrito
+    - href: script.qmd
+      text: Script
+    - href: about.qmd
+      text: Sobre este MS
+#    - icon: file-pdf
+#      text: PDF
+#      href: index.pdf
+#    - icon: file-word
+#      text: MS Word
+#      href: index.docx
+      
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    code-overflow: wrap
+    embed-resources: true
+    comments:
+      hypothesis: true
+
+editor: visual
+
+execute: 
+  warning: false
+  error: false
+  message: false
+  echo: false
+  freeze: auto
+
+code-copy: true
+
+lang: "en-US"
